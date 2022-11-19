@@ -1,8 +1,8 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
-import com.example.Integrador.dao.Impl.TurnoDaoH2;
-import com.example.Integrador.models.Turno;
-import com.example.Integrador.services.TurnoService;
+import com.proyectofinal.clinicaodontologica.dao.Impl.TurnoDaoH2;
+import com.proyectofinal.clinicaodontologica.models.Turno;
+import com.proyectofinal.clinicaodontologica.services.TurnoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

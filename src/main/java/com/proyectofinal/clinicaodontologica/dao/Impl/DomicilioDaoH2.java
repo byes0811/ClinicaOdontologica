@@ -1,7 +1,7 @@
 package com.proyectofinal.clinicaodontologica.dao.Impl;
 
-import com.example.Integrador.dao.IDao;
-import com.example.Integrador.models.Domicilio;
+import com.proyectofinal.clinicaodontologica.dao.IDao;
+import com.proyectofinal.clinicaodontologica.models.Domicilio;
 
 import java.sql.*;
 import java.util.ArrayList;

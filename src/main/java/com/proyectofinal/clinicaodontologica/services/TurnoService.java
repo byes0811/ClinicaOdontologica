@@ -1,11 +1,11 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.example.Integrador.dao.IDao;
-import com.example.Integrador.dao.Impl.OdontologoDaoH2;
-import com.example.Integrador.dao.Impl.PacienteDaoH2;
-import com.example.Integrador.models.Odontologo;
-import com.example.Integrador.models.Paciente;
-import com.example.Integrador.models.Turno;
+import com.proyectofinal.clinicaodontologica.dao.IDao;
+import com.proyectofinal.clinicaodontologica.dao.Impl.OdontologoDaoH2;
+import com.proyectofinal.clinicaodontologica.dao.Impl.PacienteDaoH2;
+import com.proyectofinal.clinicaodontologica.models.Odontologo;
+import com.proyectofinal.clinicaodontologica.models.Paciente;
+import com.proyectofinal.clinicaodontologica.models.Turno;
 
 import java.util.List;
 

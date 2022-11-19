@@ -1,7 +1,7 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.example.Integrador.dao.IDao;
-import com.example.Integrador.models.Odontologo;
+import com.proyectofinal.clinicaodontologica.dao.IDao;
+import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

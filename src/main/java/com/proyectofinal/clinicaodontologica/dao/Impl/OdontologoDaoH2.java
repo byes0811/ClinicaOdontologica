@@ -1,8 +1,7 @@
 package com.proyectofinal.clinicaodontologica.dao.Impl;
 
-import com.example.Integrador.dao.IDao;
-import com.example.Integrador.models.Odontologo;
-import org.apache.log4j.Logger;
+import com.proyectofinal.clinicaodontologica.dao.IDao;
+import com.proyectofinal.clinicaodontologica.models.Odontologo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class OdontologoDaoH2 implements IDao<Odontologo> {
 
-    final static Logger log = Logger.getLogger(OdontologoDaoH2.class);
+    //final static Logger log = Logger.getLogger(OdontologoDaoH2.class);
 
     private final static String DB_JDBC_DRIVER = "org.h2.Driver";
     //con la instruccion INIT=RUNSCRIPT cuando se conecta a la base ejecuta el script de sql que esta en dicho archivo
