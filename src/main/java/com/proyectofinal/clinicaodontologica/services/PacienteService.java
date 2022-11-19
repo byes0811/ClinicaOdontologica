@@ -12,30 +12,30 @@ public class PacienteService {
 
     private IDao<Paciente> pacienteIDao;
 
-    public PacienteService(IDao<Paciente> pacienteIDao){
+    public PacienteService(IDao<Paciente> pacienteIDao) {
         this.pacienteIDao = pacienteIDao;
     }
 
     public PacienteService() {
     }
 
-    public Paciente guardarPaciente(Paciente p) throws SQLException {
+    public Paciente guardarPaciente(Paciente p) throws Exception {
         return pacienteIDao.guardar(p);
     }
 
-    public Paciente actualizarPaciente(Paciente p){
+    public Paciente actualizarPaciente(Paciente p) throws Exception {
         return pacienteIDao.actualizar(p);
     }
 
-    public Paciente buscar(Integer id){
+    public Paciente buscar(Integer id) throws Exception{
         return pacienteIDao.buscar(id);
     }
 
-    public List<Paciente> buscarTodos(){
+    public List<Paciente> buscarTodos() throws Exception{
         return pacienteIDao.buscarTodos();
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) throws Exception{
         pacienteIDao.eliminar(id);
     }
 }

@@ -17,13 +17,13 @@ public class PacienteController {
 
     @PostMapping()
     @ResponseBody
-    public Paciente registrarPaciente(@RequestBody Paciente paciente) throws SQLException {
+    public Paciente registrarPaciente(@RequestBody Paciente paciente) throws Exception {
         return pacienteService.guardarPaciente(paciente);
     }
 
     @PutMapping()
     @ResponseBody
-    public Paciente actualizarPaciente(@RequestBody Paciente paciente){
+    public Paciente actualizarPaciente(@RequestBody Paciente paciente) throws Exception{
 
         Paciente respose = null;
 
@@ -36,7 +36,7 @@ public class PacienteController {
 
     @GetMapping()
     @ResponseBody
-    public List<Paciente> buscarTodos(){
+    public List<Paciente> buscarTodos()throws Exception{
         return pacienteService.buscarTodos();
     }
 

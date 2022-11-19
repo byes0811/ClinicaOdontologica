@@ -10,23 +10,20 @@ import java.util.List;
 public class OdontologoDaoH2 implements IDao<Odontologo> {
 
     //final static Logger log = Logger.getLogger(OdontologoDaoH2.class);
+    private Connection connection;
+    private PreparedStatement preparedStatement;
 
-    private final static String DB_JDBC_DRIVER = "org.h2.Driver";
     //con la instruccion INIT=RUNSCRIPT cuando se conecta a la base ejecuta el script de sql que esta en dicho archivo
     private final static String DB_URL = "jdbc:h2:~/db_clinica;INIT=RUNSCRIPT FROM 'create.sql'";
     private final static String DB_USER ="sa";
-    private final static String DB_PASSWORD = "";
-
+    private final static String DB_PASSWORD = "12345";
 
     @Override
-    public Odontologo guardar(Odontologo odontologo) {
+    public Odontologo guardar(Odontologo odontologo) throws Exception {
         //log.debug("guardando un nuevo odontologo");
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
         try {
             //1 Levantar el driver y Conectarnos
-            Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
@@ -43,22 +40,20 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             if(keys.next())
                 odontologo.setId(keys.getInt(1));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
             preparedStatement.close();
-
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+            connection.close();
         }
         return odontologo;
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(Integer id) throws Exception {
         //log.debug("Borrando odontologo con id : "+id);
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         try {
             //1 Levantar el driver y Conectarnos
-            Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
@@ -67,24 +62,21 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
             //3 Ejecutar una sentencia SQL
             preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-            //log.error(throwables);
+            connection.close();
         }
-
-
     }
 
     @Override
-    public Odontologo buscar(Integer id) {
+    public Odontologo buscar(Integer id) throws Exception {
         //log.debug("Buscando al odontologo con id = " + id);
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         Odontologo odontologo = null;
         try {
             //1 Levantar el driver y Conectarnos
-            Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
@@ -103,25 +95,23 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
                 odontologo = new Odontologo(idPaciente,nombre,apellido,matricula);
             }
-
-            preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             //log.error(throwables);
+        }finally {
+            preparedStatement.close();
+            connection.close();
         }
 
         return odontologo;
     }
 
     @Override
-    public List<Odontologo> buscarTodos() {
+    public List<Odontologo> buscarTodos() throws Exception {
         //log.debug("Buscando todos los odontologos");
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
         List<Odontologo> odontologos = new ArrayList<>();
         try {
             //1 Levantar el driver y Conectarnos
-            Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
@@ -142,26 +132,24 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
                 odontologos.add(odontologo);
             }
 
-            preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+
+        } catch (Exception e) {
+            e.printStackTrace();
             //log.error(throwables);
+        }finally {
+            preparedStatement.close();
+            connection.close();
         }
 
         return odontologos;
     }
 
     @Override
-    public Odontologo actualizar(Odontologo odontologo) {
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+    public Odontologo actualizar(Odontologo odontologo) throws Exception {
 
         try {
             //1 Levantar el driver y Conectarnos
-            Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-
 
             //2 Crear una sentencia
             preparedStatement = connection.prepareStatement("UPDATE ODONTOLOGOS SET NOMBRE = ?, APELLIDO = ?, MATRICULA = ?  WHERE ID_ODONTOLOGOS = ?");
@@ -172,14 +160,15 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             preparedStatement.setInt(3, odontologo.getMatricula());
             preparedStatement.setInt(4, odontologo.getId());
 
-
             //3 Ejecutar una sentencia SQL
             preparedStatement.executeUpdate();
-            preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             //log.error(throwables);
+        }finally {
+            preparedStatement.close();
+            connection.close();
         }
         return odontologo;
     }

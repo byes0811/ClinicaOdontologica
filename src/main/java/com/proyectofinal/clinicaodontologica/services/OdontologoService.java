@@ -19,23 +19,23 @@ public class OdontologoService {
     public OdontologoService() {
     }
 
-    public List<Odontologo> buscarTodos() {
+    public List<Odontologo> buscarTodos() throws Exception{
         return odontologoDao.buscarTodos();
     }
 
-    public Odontologo buscarPorId(Integer id){
+    public Odontologo buscarPorId(Integer id)throws Exception{
         return odontologoDao.buscar(id);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id)throws Exception{
         odontologoDao.eliminar(id);
     }
 
-    public Odontologo actualizarOdontologo(Odontologo o){
+    public Odontologo actualizarOdontologo(Odontologo o)throws Exception{
         return odontologoDao.actualizar(o);
     }
 
-    public Odontologo guardar(Odontologo odontologo) throws SQLException {
+    public Odontologo guardar(Odontologo odontologo) throws Exception {
         return odontologoDao.guardar(odontologo);
     }
 

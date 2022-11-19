@@ -7,7 +7,6 @@ import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class TurnoService {
@@ -22,7 +21,7 @@ public class TurnoService {
         this.odontologoIDao = new OdontologoDaoH2();
     }
 
-    public Turno guardarTurno(Turno turno) throws SQLException {
+    public Turno guardarTurno(Turno turno) throws Exception {
 
         Paciente paciente = pacienteIDao.buscar(turno.getIdPaciente());
         Odontologo odontologo = odontologoIDao.buscar(turno.getIdOdontologo());
@@ -34,19 +33,19 @@ public class TurnoService {
         return turnoIDao.guardar(turno);
     }
 
-    public Turno actualizarTurno(Turno turno) {
+    public Turno actualizarTurno(Turno turno) throws Exception {
         return turnoIDao.actualizar(turno);
     }
 
-    public Turno buscar(Integer id) {
+    public Turno buscar(Integer id) throws Exception {
         return turnoIDao.buscar(id);
     }
 
-    public List<Turno> buscarTodos(){
+    public List<Turno> buscarTodos() throws Exception {
         return turnoIDao.buscarTodos();
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) throws Exception {
         turnoIDao.eliminar(id);
     }
 }

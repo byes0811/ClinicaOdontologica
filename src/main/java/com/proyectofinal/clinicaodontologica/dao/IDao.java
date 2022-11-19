@@ -5,10 +5,10 @@ import java.util.List;
 
 public interface IDao<T> {
 
-    T guardar(T t) throws SQLException;
-    T actualizar(T t) throws SQLException;
-    T buscar(Integer id) throws SQLException;
-    void eliminar(Integer id) throws SQLException;
-    List<T> buscarTodos() throws SQLException;
+    T guardar(T t) throws SQLException, Exception;
+    T actualizar(T t) throws SQLException, Exception;
+    T buscar(Integer id) throws SQLException, Exception;
+    void eliminar(Integer id) throws SQLException, Exception;
+    List<T> buscarTodos() throws SQLException, Exception;
 
 }

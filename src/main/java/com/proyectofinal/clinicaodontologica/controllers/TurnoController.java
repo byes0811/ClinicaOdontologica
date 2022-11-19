@@ -16,13 +16,13 @@ public class TurnoController {
 
     @PostMapping()
     @ResponseBody
-    public Turno registrarTurno(@RequestBody Turno turno) throws SQLException {
+    public Turno registrarTurno(@RequestBody Turno turno) throws Exception {
         return turnoService.guardarTurno(turno);
     }
 
     @PutMapping()
     @ResponseBody
-    public Turno actualizarTurno(@RequestBody Turno turno){
+    public Turno actualizarTurno(@RequestBody Turno turno) throws Exception {
 
         Turno response = null;
 
@@ -34,13 +34,13 @@ public class TurnoController {
 
     @DeleteMapping()
     @ResponseBody
-    public void eliminarTurno(@RequestParam Integer id){
+    public void eliminarTurno(@RequestParam Integer id) throws Exception {
         turnoService.eliminar(id);
     }
 
     @GetMapping()
     @ResponseBody
-    public List<Turno> buscarTodos(){
+    public List<Turno> buscarTodos() throws Exception {
         return turnoService.buscarTodos();
     }
 }

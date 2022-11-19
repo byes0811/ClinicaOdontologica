@@ -16,33 +16,30 @@ public class OdontologoController {
 
     @PostMapping()
     @ResponseBody
-    public Odontologo registrarOdontologo(@RequestBody Odontologo odontologo) throws SQLException {
+    public Odontologo registrarOdontologo(@RequestBody Odontologo odontologo) throws Exception {
         return odontologoService.guardar(odontologo);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Odontologo obtenerPorPathVariable(@PathVariable("id") Integer id){
+    public Odontologo obtenerPorPathVariable(@PathVariable("id") Integer id)throws Exception{
         return odontologoService.buscarPorId(id);
     }
 
     @GetMapping("/RP")
     @ResponseBody
-    public Odontologo obtenerPorRequestParam(@RequestParam Integer id){
+    public Odontologo obtenerPorRequestParam(@RequestParam Integer id)throws Exception{
         return odontologoService.buscarPorId(id);
     }
 
-
-    // Delete
     @DeleteMapping("/delete")
-    public void deletePorRequestParam(@RequestParam Integer id){
+    public void deletePorRequestParam(@RequestParam Integer id)throws Exception{
         odontologoService.eliminar(id);
     }
 
-    // All
     @GetMapping()
     @ResponseBody
-    public List<Odontologo> buscarTodos(){
+    public List<Odontologo> buscarTodos()throws Exception{
         return odontologoService.buscarTodos();
     }
 }
