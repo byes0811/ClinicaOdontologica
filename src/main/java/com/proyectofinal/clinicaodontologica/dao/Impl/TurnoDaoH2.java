@@ -1,0 +1,194 @@
+package com.example.Integrador.dao.Impl;
+
+import com.example.Integrador.dao.IDao;
+import com.example.Integrador.models.Domicilio;
+import com.example.Integrador.models.Odontologo;
+import com.example.Integrador.models.Paciente;
+import com.example.Integrador.models.Turno;
+import com.example.Integrador.services.OdontologoService;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TurnoDaoH2 implements IDao<Turno> {
+
+    private final static String DB_JDBC_DRIVER = "org.h2.Driver";
+    //con la instruccion INIT=RUNSCRIPT cuando se conecta a la base ejecuta el script de sql que esta en dicho archivo
+    private final static String DB_URL = "jdbc:h2:~/db_clinica;INIT=RUNSCRIPT FROM 'create.sql'";
+    private final static String DB_USER = "sa";
+    private final static String DB_PASSWORD = "";
+
+    private PacienteDaoH2 pacienteDaoH2 = new PacienteDaoH2();
+    private OdontologoDaoH2 odontologoDaoH2 = new OdontologoDaoH2();
+
+
+    @Override
+    public Turno guardar(Turno turno) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            //1 Levantar el driver y Conectarnos
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            /*
+            Paciente paciente = pacienteDaoH2.guardar(turno.getPaciente());
+            turno.getPaciente().setId(paciente.getId());
+
+            Odontologo odontologo = odontologoDaoH2.guardar(turno.getOdontologo());
+            turno.getOdontologo().setId(odontologo.getId());*/
+
+            //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
+            preparedStatement = connection.prepareStatement("INSERT INTO turno(id_paciente,id_odontologo,fecha_cita) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
+            //preparedStatement.setInt(1,domicilio.getId());
+            preparedStatement.setInt(1, turno.getId_paciente());
+            preparedStatement.setInt(2, turno.getId_odontologo());
+            preparedStatement.setDate(3, turno.getFecha_cita());
+
+            //3 Ejecutar una sentencia SQL y obtener los ID que se autogeneraron en la base de datos
+            preparedStatement.executeUpdate();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
+            if (keys.next())
+                turno.setId(keys.getInt(1));
+
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return turno;
+    }
+
+    @Override
+    public Turno actualizar(Turno turno) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            //1 Levantar el driver y Conectarnos
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            /*Paciente paciente = pacienteDaoH2.actualizar(turno.getPaciente());
+
+            Odontologo odontologo = odontologoDaoH2.actualizar(turno.getOdontologo());*/
+
+            //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
+            preparedStatement = connection.prepareStatement("UPDATE TURNO SET ID_PACIENTE=?, ID_ODONTOLOGO=?, FECHA_CITA=? WHERE id = ?");
+            //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
+            //preparedStatement.setInt(1,paciente.getId());
+
+            //Tenemos que pasarle la clave foranea del ID del domicilio es decir el campo domicilio_id
+            preparedStatement.setInt(1, turno.getId_paciente());
+            preparedStatement.setInt(2, turno.getId_odontologo());
+            preparedStatement.setDate(3, turno.getFecha_cita());
+            preparedStatement.setInt(4, turno.getId());
+
+            //3 Ejecutar una sentencia SQL
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return turno;
+    }
+
+    @Override
+    public Turno buscar(Integer id) {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Turno turno = null;
+        try {
+            //1 Levantar el driver y Conectarnos
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            //2 Crear una sentencia
+            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNO where id = ?");
+            preparedStatement.setInt(1, id);
+
+            //3 Ejecutar una sentencia SQL
+            ResultSet result = preparedStatement.executeQuery();
+
+            //4 Obtener resultados
+            while (result.next()) {
+                Integer idTurno = result.getInt("id");
+                Integer idPaciente = result.getInt("id_paciente");
+                Integer idOdontologo = result.getInt("id_odontologo");
+                Date fecha_cita = result.getDate("fecha_cita");
+
+                Paciente paciente = pacienteDaoH2.buscar(idPaciente);
+                Odontologo odontologo = odontologoDaoH2.buscar(idOdontologo);
+                turno = new Turno(idTurno, idPaciente, idOdontologo, fecha_cita);
+            }
+
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return turno;
+    }
+
+    @Override
+    public void eliminar(Integer id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            //1 Levantar el driver y Conectarnos
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            //2 Crear una sentencia
+            preparedStatement = connection.prepareStatement("DELETE FROM TURNO where id = ?");
+            preparedStatement.setInt(1, id);
+
+            //3 Ejecutar una sentencia SQL
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Turno> buscarTodos() {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Turno> turnos = new ArrayList<>();
+        try {
+            //1 Levantar el driver y Conectarnos
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            //2 Crear una sentencia
+            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNO");
+
+            //3 Ejecutar una sentencia SQL
+            ResultSet result = preparedStatement.executeQuery();
+
+            //4 Obtener resultados
+            while (result.next()) {
+
+                int idTurno = result.getInt("id");
+                int idPaciente = result.getInt("id_paciente");
+                int idOdontologo = result.getInt("id_odontologo");
+                Date fechaCita = result.getDate("fecha_cita");
+
+                Turno turno = new Turno(idTurno, idPaciente, idOdontologo, fechaCita);
+
+                turnos.add(turno);
+            }
+
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return turnos;
+    }
+}
