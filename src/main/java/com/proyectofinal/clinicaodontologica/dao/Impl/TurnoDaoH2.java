@@ -1,11 +1,9 @@
-package com.example.Integrador.dao.Impl;
+package com.proyectofinal.clinicaodontologica.dao.Impl;
 
 import com.example.Integrador.dao.IDao;
-import com.example.Integrador.models.Domicilio;
 import com.example.Integrador.models.Odontologo;
 import com.example.Integrador.models.Paciente;
 import com.example.Integrador.models.Turno;
-import com.example.Integrador.services.OdontologoService;
 
 import java.sql.*;
 import java.util.ArrayList;

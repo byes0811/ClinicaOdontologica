@@ -1,4 +1,4 @@
-package com.example.Integrador.dao.Impl;
+package com.proyectofinal.clinicaodontologica.dao.Impl;
 
 import com.example.Integrador.dao.IDao;
 import com.example.Integrador.models.Domicilio;
@@ -112,7 +112,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
                 String nombre = result.getString("nombre");
                 String apellido = result.getString("apellido");
                 int dni = result.getInt("dni");
-                java.sql.Date fechaIngreso = result.getDate("fecha_ingreso");
+                Date fechaIngreso = result.getDate("fecha_ingreso");
                 int idDomicilio = result.getInt("domicilio_id");
                 //Con el domicilio_id traemos el domicilio de la tabla domicilio a traves de DAO de Domicilios
                 Domicilio domicilio = domicilioDaoH2.buscar(idDomicilio);

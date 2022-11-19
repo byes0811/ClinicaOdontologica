@@ -1,4 +1,4 @@
-package com.example.Integrador.dao.Impl;
+package com.proyectofinal.clinicaodontologica.dao.Impl;
 
 import com.example.Integrador.dao.IDao;
 import com.example.Integrador.models.Domicilio;

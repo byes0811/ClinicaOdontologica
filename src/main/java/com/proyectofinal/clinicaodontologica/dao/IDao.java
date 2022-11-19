@@ -1,4 +1,4 @@
-package com.example.Integrador.dao;
+package com.proyectofinal.clinicaodontologica.dao;
 
 import java.util.List;
 

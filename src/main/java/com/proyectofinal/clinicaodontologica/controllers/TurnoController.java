@@ -1,8 +1,6 @@
-package com.example.Integrador.controllers;
+package com.proyectofinal.clinicaodontologica.controllers;
 
 import com.example.Integrador.dao.Impl.TurnoDaoH2;
-import com.example.Integrador.models.Odontologo;
-import com.example.Integrador.models.Paciente;
 import com.example.Integrador.models.Turno;
 import com.example.Integrador.services.TurnoService;
 import org.springframework.web.bind.annotation.*;
