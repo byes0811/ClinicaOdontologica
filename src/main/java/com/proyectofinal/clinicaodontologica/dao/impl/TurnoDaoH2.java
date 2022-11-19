@@ -1,8 +1,6 @@
-package com.proyectofinal.clinicaodontologica.dao.Impl;
+package com.proyectofinal.clinicaodontologica.dao.impl;
 
 import com.proyectofinal.clinicaodontologica.dao.IDao;
-import com.proyectofinal.clinicaodontologica.models.Odontologo;
-import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
 
 import java.sql.*;
@@ -42,15 +40,15 @@ public class TurnoDaoH2 implements IDao<Turno> {
 
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,domicilio.getId());
-            preparedStatement.setInt(1, turno.getId_paciente());
-            preparedStatement.setInt(2, turno.getId_odontologo());
-            preparedStatement.setDate(3, turno.getFecha_cita());
+            preparedStatement.setInt(1, turno.getIdPaciente());
+            preparedStatement.setInt(2, turno.getIdOdontologo());
+            preparedStatement.setDate(3, turno.getFechaCita());
 
             //3 Ejecutar una sentencia SQL y obtener los ID que se autogeneraron en la base de datos
             preparedStatement.executeUpdate();
             ResultSet keys = preparedStatement.getGeneratedKeys();
             if (keys.next())
-                turno.setId(keys.getInt(1));
+                turno.setIdTurno(keys.getInt(1));
 
             preparedStatement.close();
 
@@ -80,10 +78,10 @@ public class TurnoDaoH2 implements IDao<Turno> {
             //preparedStatement.setInt(1,paciente.getId());
 
             //Tenemos que pasarle la clave foranea del ID del domicilio es decir el campo domicilio_id
-            preparedStatement.setInt(1, turno.getId_paciente());
-            preparedStatement.setInt(2, turno.getId_odontologo());
-            preparedStatement.setDate(3, turno.getFecha_cita());
-            preparedStatement.setInt(4, turno.getId());
+            preparedStatement.setInt(1, turno.getIdPaciente());
+            preparedStatement.setInt(2, turno.getIdOdontologo());
+            preparedStatement.setDate(3, turno.getFechaCita());
+            preparedStatement.setInt(4, turno.getIdTurno());
 
             //3 Ejecutar una sentencia SQL
             preparedStatement.executeUpdate();
@@ -118,11 +116,9 @@ public class TurnoDaoH2 implements IDao<Turno> {
                 Integer idTurno = result.getInt("ID_TURNO");
                 Integer idPaciente = result.getInt("ID_PACIENTE");
                 Integer idOdontologo = result.getInt("ID_ODONTOLOGO");
-                Date fecha_cita = result.getDate("FECHA_CITA");
+                Date fechaCita = result.getDate("FECHA_CITA");
 
-                Paciente paciente = pacienteDaoH2.buscar(idPaciente);
-                Odontologo odontologo = odontologoDaoH2.buscar(idOdontologo);
-                turno = new Turno(idTurno, idPaciente, idOdontologo, fecha_cita);
+                turno = new Turno(idTurno, idPaciente, idOdontologo, fechaCita);
             }
 
             preparedStatement.close();

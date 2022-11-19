@@ -1,6 +1,6 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
-import com.proyectofinal.clinicaodontologica.dao.Impl.OdontologoDaoH2;
+import com.proyectofinal.clinicaodontologica.dao.impl.OdontologoDaoH2;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.services.OdontologoService;
 import org.springframework.web.bind.annotation.*;

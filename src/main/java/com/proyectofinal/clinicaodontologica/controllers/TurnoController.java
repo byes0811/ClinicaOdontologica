@@ -1,6 +1,6 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
-import com.proyectofinal.clinicaodontologica.dao.Impl.TurnoDaoH2;
+import com.proyectofinal.clinicaodontologica.dao.impl.TurnoDaoH2;
 import com.proyectofinal.clinicaodontologica.models.Turno;
 import com.proyectofinal.clinicaodontologica.services.TurnoService;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class TurnoController {
 
         Turno response = null;
 
-        if(turno.getId() != null && turnoService.buscar(turno.getId()) != null){
+        if(turno.getIdTurno() != null && turnoService.buscar(turno.getIdTurno()) != null){
             response = turnoService.actualizarTurno(turno);
         }
         return response;

@@ -11,8 +11,8 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Turno {
 
-    private Integer id;
-    private Integer id_paciente;
-    private Integer id_odontologo;
-    private Date fecha_cita;
+    private Integer idTurno;
+    private Integer idPaciente;
+    private Integer idOdontologo;
+    private Date fechaCita;
 }

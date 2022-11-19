@@ -1,8 +1,8 @@
 package com.proyectofinal.clinicaodontologica.services;
 
 import com.proyectofinal.clinicaodontologica.dao.IDao;
-import com.proyectofinal.clinicaodontologica.dao.Impl.OdontologoDaoH2;
-import com.proyectofinal.clinicaodontologica.dao.Impl.PacienteDaoH2;
+import com.proyectofinal.clinicaodontologica.dao.impl.OdontologoDaoH2;
+import com.proyectofinal.clinicaodontologica.dao.impl.PacienteDaoH2;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
@@ -24,8 +24,8 @@ public class TurnoService {
 
     public Turno guardarTurno(Turno turno) throws SQLException {
 
-        Paciente paciente = pacienteIDao.buscar(turno.getId_paciente());
-        Odontologo odontologo = odontologoIDao.buscar(turno.getId_odontologo());
+        Paciente paciente = pacienteIDao.buscar(turno.getIdPaciente());
+        Odontologo odontologo = odontologoIDao.buscar(turno.getIdOdontologo());
 
         if (paciente == null || odontologo == null) {
             turno = null;

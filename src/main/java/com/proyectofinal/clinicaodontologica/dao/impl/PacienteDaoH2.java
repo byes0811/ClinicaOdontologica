@@ -1,4 +1,4 @@
-package com.proyectofinal.clinicaodontologica.dao.Impl;
+package com.proyectofinal.clinicaodontologica.dao.impl;
 
 import com.proyectofinal.clinicaodontologica.dao.IDao;
 import com.proyectofinal.clinicaodontologica.models.Domicilio;
