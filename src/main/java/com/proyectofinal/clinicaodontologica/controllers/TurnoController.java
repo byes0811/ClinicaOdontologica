@@ -5,6 +5,7 @@ import com.proyectofinal.clinicaodontologica.models.Turno;
 import com.proyectofinal.clinicaodontologica.services.TurnoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class TurnoController {
 
     @PostMapping()
     @ResponseBody
-    public Turno registrarTurno(@RequestBody Turno turno){
+    public Turno registrarTurno(@RequestBody Turno turno) throws SQLException {
         return turnoService.guardarTurno(turno);
     }
 

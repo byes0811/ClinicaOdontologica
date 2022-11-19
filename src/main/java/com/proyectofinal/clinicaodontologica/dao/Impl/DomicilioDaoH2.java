@@ -17,7 +17,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
 
 
     @Override
-    public Domicilio guardar(Domicilio domicilio) {
+    public Domicilio guardar(Domicilio domicilio) throws SQLException {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -28,7 +28,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("INSERT INTO domicilios(calle,numero,localidad,provincia) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO DOMICILIOS(CALLE,NUMERO,LOCALIDAD,PROVINCIA) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,domicilio.getId());
             preparedStatement.setString(1, domicilio.getCalle());
@@ -42,10 +42,11 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             if (keys.next())
                 domicilio.setId(keys.getInt(1));
 
-            preparedStatement.close();
-
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException | ClassNotFoundException | NullPointerException throwables) {
             throwables.printStackTrace();
+        }finally {
+            preparedStatement.close();
+            connection.close();
         }
         return domicilio;
     }
@@ -60,7 +61,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("DELETE FROM domicilios where id = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM DOMICILIOS WHERE ID_DOMICILIO = ?");
             preparedStatement.setInt(1, id);
 
             //3 Ejecutar una sentencia SQL
@@ -84,7 +85,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT id,calle,numero,localidad,provincia FROM domicilios where id = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM DOMICILIOS WHERE ID_DOMICILIO = ?");
             preparedStatement.setInt(1, id);
 
             //3 Ejecutar una sentencia SQL
@@ -92,11 +93,11 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
 
             //4 Obtener resultados
             while (result.next()) {
-                int idDomicilio = result.getInt("id");
-                String calle = result.getString("calle");
-                String numero = result.getString("numero");
-                String localidad = result.getString("localidad");
-                String provincia = result.getString("provincia");
+                int idDomicilio = result.getInt("ID_DOMICILIO");
+                String calle = result.getString("CALLE");
+                String numero = result.getString("NUMERO");
+                String localidad = result.getString("LOCALIDAD");
+                String provincia = result.getString("PROVINCIA");
 
                 domicilio = new Domicilio(idDomicilio, calle, numero, localidad, provincia);
             }
@@ -120,7 +121,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT *  FROM domicilios");
+            preparedStatement = connection.prepareStatement("SELECT * FROM DOMICILIOS");
 
             //3 Ejecutar una sentencia SQL
             ResultSet result = preparedStatement.executeQuery();
@@ -128,14 +129,13 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             //4 Obtener resultados
             while (result.next()) {
 
-                int idDomicilio = result.getInt("id");
-                String calle = result.getString("calle");
-                String numero = result.getString("numero");
-                String localidad = result.getString("localidad");
-                String provincia = result.getString("provincia");
+                int idDomicilio = result.getInt("ID_DOMICILIO");
+                String calle = result.getString("CALLE");
+                String numero = result.getString("NUMERO");
+                String localidad = result.getString("LOCALIDAD");
+                String provincia = result.getString("PROVINCIA");
 
                 Domicilio domicilio = new Domicilio(idDomicilio, calle, numero, localidad, provincia);
-
                 domicilios.add(domicilio);
 
             }
@@ -158,7 +158,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-            preparedStatement = connection.prepareStatement("UPDATE domicilios SET calle = ?, numero = ? ,localidad = ?, provincia = ?  WHERE id = ?");
+            preparedStatement = connection.prepareStatement("UPDATE DOMICILIOS SET CALLE = ?, NUMERO = ? , LOCALIDAD = ?, PROVINCIA = ?  WHERE ID_DOMICILIO = ?");
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,domicilio.getId());
             preparedStatement.setString(1, domicilio.getCalle());

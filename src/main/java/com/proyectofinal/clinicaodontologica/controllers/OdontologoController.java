@@ -5,6 +5,7 @@ import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.services.OdontologoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class OdontologoController {
 
     @PostMapping()
     @ResponseBody
-    public Odontologo registrarOdontologo(@RequestBody Odontologo odontologo){
+    public Odontologo registrarOdontologo(@RequestBody Odontologo odontologo) throws SQLException {
         return odontologoService.guardar(odontologo);
     }
 

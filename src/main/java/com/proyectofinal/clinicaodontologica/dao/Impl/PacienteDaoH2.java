@@ -41,7 +41,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             paciente.getDomicilio().setId(domicilio.getId());
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("INSERT INTO pacientes(nombre,apellido,dni,fecha_ingreso,domicilio_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO PACIENTES(NOMBRE,APELLIDO,DNI,FECHA_INGRESO,ID_DOMICILIO) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,paciente.getId());
             preparedStatement.setString(1, paciente.getNombre());
@@ -76,7 +76,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("DELETE FROM pacientes where id = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM PACIENTES WHERE ID_PACIENTE = ?");
             preparedStatement.setInt(1,id);
 
             //3 Ejecutar una sentencia SQL
@@ -85,8 +85,6 @@ public class PacienteDaoH2 implements IDao<Paciente> {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -100,7 +98,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT id,nombre,apellido,dni,fecha_ingreso,domicilio_id  FROM pacientes where id = ?");
+            preparedStatement = connection.prepareStatement("SELECT *  FROM PACIENTES WHERE ID_PACIENTE = ?");
             preparedStatement.setInt(1,id);
 
             //3 Ejecutar una sentencia SQL
@@ -108,12 +106,12 @@ public class PacienteDaoH2 implements IDao<Paciente> {
 
             //4 Obtener resultados
             while (result.next()) {
-                Integer idPaciente = result.getInt("id");
-                String nombre = result.getString("nombre");
-                String apellido = result.getString("apellido");
-                int dni = result.getInt("dni");
-                Date fechaIngreso = result.getDate("fecha_ingreso");
-                int idDomicilio = result.getInt("domicilio_id");
+                Integer idPaciente = result.getInt("ID_PACIENTE");
+                String nombre = result.getString("NOMBRE");
+                String apellido = result.getString("APELLIDO");
+                int dni = result.getInt("DNI");
+                Date fechaIngreso = result.getDate("FECHA_INGRESO");
+                int idDomicilio = result.getInt("ID_DOMICILIO");
                 //Con el domicilio_id traemos el domicilio de la tabla domicilio a traves de DAO de Domicilios
                 Domicilio domicilio = domicilioDaoH2.buscar(idDomicilio);
                 paciente = new Paciente(idPaciente,apellido,nombre,dni,fechaIngreso,domicilio);
@@ -138,7 +136,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT *  FROM pacientes");
+            preparedStatement = connection.prepareStatement("SELECT * FROM PACIENTES");
 
             //3 Ejecutar una sentencia SQL
             ResultSet result = preparedStatement.executeQuery();
@@ -146,12 +144,12 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             //4 Obtener resultados
             //4 Obtener resultados
             while (result.next()) {
-                int idPaciente = result.getInt("id");
-                String nombre = result.getString("nombre");
-                String apellido = result.getString("apellido");
-                int dni = result.getInt("dni");
-                Date fechaIngreso = result.getDate("fecha_ingreso");
-                int idDomicilio = result.getInt("domicilio_id");
+                int idPaciente = result.getInt("ID_PACIENTE");
+                String nombre = result.getString("NOMBRE");
+                String apellido = result.getString("APELLIDO");
+                int dni = result.getInt("DNI");
+                Date fechaIngreso = result.getDate("FECHA_INGRESO");
+                int idDomicilio = result.getInt("ID_DOMICILIO");
                 //Con el domicilio_id traemos el domicilio de la tabla domicilio a traves de DAO de Domicilios
                 Domicilio domicilio = domicilioDaoH2.buscar(idDomicilio);
                 Paciente paciente = new Paciente(idPaciente,nombre,apellido,dni,fechaIngreso,domicilio);
@@ -182,7 +180,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             Domicilio domicilio = domicilioDaoH2.actualizar(paciente.getDomicilio());
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("UPDATE pacientes SET nombre=?, apellido=?, dni=?, fecha_ingreso=?, domicilio_id=?  WHERE id = ?");
+            preparedStatement = connection.prepareStatement("UPDATE PACIENTES SET NOMBRE=?, APELLIDO=?, DNI=?, FECHA_INGRESO=?, ID_DOMICILIO=?  WHERE ID_PACIENTE = ?");
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,paciente.getId());
             preparedStatement.setString(1, paciente.getNombre());
@@ -196,7 +194,6 @@ public class PacienteDaoH2 implements IDao<Paciente> {
 
             //3 Ejecutar una sentencia SQL
             preparedStatement.executeUpdate();
-
 
             preparedStatement.close();
 

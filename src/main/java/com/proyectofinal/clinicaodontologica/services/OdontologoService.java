@@ -4,6 +4,7 @@ import com.proyectofinal.clinicaodontologica.dao.IDao;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class OdontologoService {
         return odontologoDao.actualizar(o);
     }
 
-    public Odontologo guardar(Odontologo odontologo){
+    public Odontologo guardar(Odontologo odontologo) throws SQLException {
         return odontologoDao.guardar(odontologo);
     }
 

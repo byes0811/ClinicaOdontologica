@@ -38,7 +38,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             turno.getOdontologo().setId(odontologo.getId());*/
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("INSERT INTO turno(id_paciente,id_odontologo,fecha_cita) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO TURNOS(ID_PACIENTE,ID_ODONTOLOGO,FECHA_CITA) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,domicilio.getId());
@@ -75,7 +75,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             Odontologo odontologo = odontologoDaoH2.actualizar(turno.getOdontologo());*/
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("UPDATE TURNO SET ID_PACIENTE=?, ID_ODONTOLOGO=?, FECHA_CITA=? WHERE id = ?");
+            preparedStatement = connection.prepareStatement("UPDATE TURNOS SET ID_PACIENTE=?, ID_ODONTOLOGO=?, FECHA_CITA=? WHERE ID_TURNO = ?");
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,paciente.getId());
 
@@ -107,7 +107,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNO where id = ?");
+            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNOS WHERE ID_TURNO = ?");
             preparedStatement.setInt(1, id);
 
             //3 Ejecutar una sentencia SQL
@@ -115,10 +115,10 @@ public class TurnoDaoH2 implements IDao<Turno> {
 
             //4 Obtener resultados
             while (result.next()) {
-                Integer idTurno = result.getInt("id");
-                Integer idPaciente = result.getInt("id_paciente");
-                Integer idOdontologo = result.getInt("id_odontologo");
-                Date fecha_cita = result.getDate("fecha_cita");
+                Integer idTurno = result.getInt("ID_TURNO");
+                Integer idPaciente = result.getInt("ID_PACIENTE");
+                Integer idOdontologo = result.getInt("ID_ODONTOLOGO");
+                Date fecha_cita = result.getDate("FECHA_CITA");
 
                 Paciente paciente = pacienteDaoH2.buscar(idPaciente);
                 Odontologo odontologo = odontologoDaoH2.buscar(idOdontologo);
@@ -142,7 +142,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("DELETE FROM TURNO where id = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM TURNOS WHERE ID_TURNO = ?");
             preparedStatement.setInt(1, id);
 
             //3 Ejecutar una sentencia SQL
@@ -165,7 +165,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNO");
+            preparedStatement = connection.prepareStatement("SELECT *  FROM TURNOS");
 
             //3 Ejecutar una sentencia SQL
             ResultSet result = preparedStatement.executeQuery();
@@ -173,13 +173,12 @@ public class TurnoDaoH2 implements IDao<Turno> {
             //4 Obtener resultados
             while (result.next()) {
 
-                int idTurno = result.getInt("id");
-                int idPaciente = result.getInt("id_paciente");
-                int idOdontologo = result.getInt("id_odontologo");
-                Date fechaCita = result.getDate("fecha_cita");
+                int idTurno = result.getInt("ID_TURNO");
+                int idPaciente = result.getInt("ID_PACIENTE");
+                int idOdontologo = result.getInt("ID_ODONTOLOGO");
+                Date fechaCita = result.getDate("FECHA_CITA");
 
                 Turno turno = new Turno(idTurno, idPaciente, idOdontologo, fechaCita);
-
                 turnos.add(turno);
             }
 

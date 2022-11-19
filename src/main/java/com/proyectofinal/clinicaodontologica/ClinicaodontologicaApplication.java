@@ -8,7 +8,7 @@ public class ClinicaodontologicaApplication {
 
     public static void main(String[] args) throws Exception {
 
-        BD.crearBD();
+        //BD.crearBD();
         SpringApplication.run(ClinicaodontologicaApplication.class, args);
     }
 

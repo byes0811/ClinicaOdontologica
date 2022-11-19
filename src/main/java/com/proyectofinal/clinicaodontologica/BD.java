@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class BD {
-    private static final String SQL_CREATE_TABLE =" DROP TABLE IF EXISTS ODONTOLOGOS; CREATE TABLE ODONTOLOGOS " +
+    private static final String SQL_CREATE_TABLE ="DROP TABLE IF EXISTS ODONTOLOGOS; CREATE TABLE ODONTOLOGOS " +
             "(ID INT AUTO_INCREMENT PRIMARY KEY, " +
             "MATRICULA INT NOT NULL, " +
             "NOMBRE varchar(100), " +

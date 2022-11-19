@@ -30,7 +30,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia especificando que el ID lo auto incrementa la base de datos y que nos devuelva esa Key es decir ID
-            preparedStatement = connection.prepareStatement("INSERT INTO odontologos(nombre,apellido,matricula) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO ODONTOLOGOS(NOMBRE,APELLIDO,MATRICULA) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,odontologo.getId());
             preparedStatement.setString(1, odontologo.getNombre());
@@ -62,7 +62,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("DELETE FROM odontologos where id = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM ODONTOLOGOS WHERE ID_ODONTOLOGO = ?");
             preparedStatement.setInt(1,id);
 
             //3 Ejecutar una sentencia SQL
@@ -88,7 +88,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT id,nombre,apellido,matricula FROM odontologos where id = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM ODONTOLOGOS WHERE ID_ODONTOLOGO = ?");
             preparedStatement.setInt(1,id);
 
             //3 Ejecutar una sentencia SQL
@@ -96,10 +96,10 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
             //4 Obtener resultados
             while (result.next()) {
-                int idPaciente = result.getInt("id");
-                String nombre = result.getString("nombre");
-                String apellido = result.getString("apellido");
-                int matricula = result.getInt("matricula");
+                int idPaciente = result.getInt("ID_ODONTOLOGO");
+                String nombre = result.getString("NOMBRE");
+                String apellido = result.getString("APELLIDO");
+                int matricula = result.getInt("MATRICULA");
 
                 odontologo = new Odontologo(idPaciente,nombre,apellido,matricula);
             }
@@ -125,7 +125,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("SELECT *  FROM odontologos");
+            preparedStatement = connection.prepareStatement("SELECT *  FROM ODONTOLOGOS");
 
             //3 Ejecutar una sentencia SQL
             ResultSet result = preparedStatement.executeQuery();
@@ -133,10 +133,10 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             //4 Obtener resultados
             //4 Obtener resultados
             while (result.next()) {
-                int idOdontologo = result.getInt("id");
-                String nombre = result.getString("nombre");
-                String apellido = result.getString("apellido");
-                int matricula = result.getInt("matricula");
+                int idOdontologo = result.getInt("ID_ODONTOLOGO");
+                String nombre = result.getString("NOMBRE");
+                String apellido = result.getString("APELLIDO");
+                int matricula = result.getInt("MATRICULA");
 
                 Odontologo odontologo = new Odontologo(idOdontologo,nombre,apellido,matricula);
                 odontologos.add(odontologo);
@@ -164,7 +164,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
 
             //2 Crear una sentencia
-            preparedStatement = connection.prepareStatement("UPDATE odontologos SET nombre = ?, apellido = ?,matricula = ?  WHERE id = ?");
+            preparedStatement = connection.prepareStatement("UPDATE ODONTOLOGOS SET NOMBRE = ?, APELLIDO = ?, MATRICULA = ?  WHERE ID_ODONTOLOGOS = ?");
             //No le vamos a pasar el ID ya que hicimos que fuera autoincremental en la base de datos
             //preparedStatement.setInt(1,odontologo.getId());
             preparedStatement.setString(1, odontologo.getNombre());
@@ -175,8 +175,6 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
             //3 Ejecutar una sentencia SQL
             preparedStatement.executeUpdate();
-
-
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException throwables) {
