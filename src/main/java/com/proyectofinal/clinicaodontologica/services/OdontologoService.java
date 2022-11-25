@@ -1,43 +1,50 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.proyectofinal.clinicaodontologica.dao.IDao;
+import com.proyectofinal.clinicaodontologica.repository.OdontologoRepository;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OdontologoService {
 
-    private IDao<Odontologo> odontologoDao;
+    @Autowired
+    private OdontologoRepository odontologoRepository;
 
-    public OdontologoService(IDao<Odontologo> odontologoDao) {
-        this.odontologoDao = odontologoDao;
+    public List<Odontologo> buscarTodos() {
+        return odontologoRepository.findAll();
     }
 
-    public OdontologoService() {
+    public Odontologo buscarPorId(Integer id) {
+
+        Optional<Odontologo> odontologo = odontologoRepository.findById(id);
+
+        if(odontologo.isPresent()){
+            return odontologo.get();
+        }else{
+            return null;
+        }
     }
 
-    public List<Odontologo> buscarTodos() throws Exception{
-        return odontologoDao.buscarTodos();
+    public void eliminar(Integer id) {
+        odontologoRepository.deleteById(id);
     }
 
-    public Odontologo buscarPorId(Integer id)throws Exception{
-        return odontologoDao.buscar(id);
+    public Odontologo actualizarOdontologo(Odontologo odontologo) {
+
+        Optional<Odontologo> odontologo1 = odontologoRepository.findById(odontologo.getId());
+
+        if(odontologo1.isPresent()){
+            return odontologoRepository.save(odontologo1.get());
+        }else{
+            return null;
+        }
     }
 
-    public void eliminar(Integer id)throws Exception{
-        odontologoDao.eliminar(id);
+    public Odontologo guardar(Odontologo odontologo) {
+        return odontologoRepository.save(odontologo);
     }
-
-    public Odontologo actualizarOdontologo(Odontologo o)throws Exception{
-        return odontologoDao.actualizar(o);
-    }
-
-    public Odontologo guardar(Odontologo odontologo) throws Exception {
-        return odontologoDao.guardar(odontologo);
-    }
-
-
 }

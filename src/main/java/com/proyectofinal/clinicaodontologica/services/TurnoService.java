@@ -1,51 +1,48 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.proyectofinal.clinicaodontologica.dao.IDao;
-import com.proyectofinal.clinicaodontologica.dao.impl.OdontologoDaoH2;
-import com.proyectofinal.clinicaodontologica.dao.impl.PacienteDaoH2;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
+import com.proyectofinal.clinicaodontologica.repository.TurnoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
-
+import java.util.Optional;
+@Service
 public class TurnoService {
-    private IDao<Paciente> pacienteIDao;
-    private IDao<Odontologo> odontologoIDao;
 
-    private IDao<Turno> turnoIDao;
+    @Autowired
+    private PacienteService pacienteService;
+    @Autowired
+    private OdontologoService odontologoService;
+    @Autowired
+    private TurnoRepository turnoRepository;
 
-    public TurnoService(IDao<Turno> turnoIDao) {
-        this.turnoIDao = turnoIDao;
-        this.pacienteIDao = new PacienteDaoH2();
-        this.odontologoIDao = new OdontologoDaoH2();
+    public Turno guardarTurno(Turno turno) {
+        return turnoRepository.save(turno);
     }
 
-    public Turno guardarTurno(Turno turno) throws Exception {
+    public Turno actualizarTurno(Turno turno)  {
+        return null;
+    }
 
-        Paciente paciente = pacienteIDao.buscar(turno.getIdPaciente());
-        Odontologo odontologo = odontologoIDao.buscar(turno.getIdOdontologo());
+    public Turno buscarPorId(Integer id)  {
+        Optional<Turno> turno = turnoRepository.findById(id);
 
-        if (paciente == null || odontologo == null) {
-            turno = null;
-            return turno;
+        if(turno.isPresent()){
+            return turno.get();
+        }else{
+            return null;
         }
-        return turnoIDao.guardar(turno);
     }
 
-    public Turno actualizarTurno(Turno turno) throws Exception {
-        return turnoIDao.actualizar(turno);
+    public List<Turno> buscarTodos() {
+        return turnoRepository.findAll();
     }
 
-    public Turno buscar(Integer id) throws Exception {
-        return turnoIDao.buscar(id);
-    }
-
-    public List<Turno> buscarTodos() throws Exception {
-        return turnoIDao.buscarTodos();
-    }
-
-    public void eliminar(Integer id) throws Exception {
-        turnoIDao.eliminar(id);
+    public void eliminar(Integer id) {
+        turnoRepository.deleteById(id);
     }
 }

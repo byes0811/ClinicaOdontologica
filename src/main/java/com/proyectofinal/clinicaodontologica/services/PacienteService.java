@@ -1,41 +1,48 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.proyectofinal.clinicaodontologica.dao.IDao;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
+import com.proyectofinal.clinicaodontologica.repository.PacienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PacienteService {
 
-    private IDao<Paciente> pacienteIDao;
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
-    public PacienteService(IDao<Paciente> pacienteIDao) {
-        this.pacienteIDao = pacienteIDao;
+    public Paciente guardarPaciente(Paciente paciente) {
+        return pacienteRepository.save(paciente);
     }
 
-    public PacienteService() {
+    public Paciente actualizarPaciente(Paciente paciente) {
+        Optional<Paciente> paciente1 = pacienteRepository.findById(paciente.getId());
+
+        if (paciente1.isPresent()) {
+            return pacienteRepository.save(paciente1.get());
+        } else {
+            return null;
+        }
     }
 
-    public Paciente guardarPaciente(Paciente p) throws Exception {
-        return pacienteIDao.guardar(p);
+    public Paciente buscarPorId(Integer id) {
+        Optional<Paciente> paciente = pacienteRepository.findById(id);
+
+        if (paciente.isPresent()) {
+            return paciente.get();
+        } else {
+            return null;
+        }
     }
 
-    public Paciente actualizarPaciente(Paciente p) throws Exception {
-        return pacienteIDao.actualizar(p);
+    public List<Paciente> buscarTodos() {
+        return pacienteRepository.findAll();
     }
 
-    public Paciente buscar(Integer id) throws Exception{
-        return pacienteIDao.buscar(id);
-    }
-
-    public List<Paciente> buscarTodos() throws Exception{
-        return pacienteIDao.buscarTodos();
-    }
-
-    public void eliminar(Integer id) throws Exception{
-        pacienteIDao.eliminar(id);
+    public void eliminar(Integer id) {
+        pacienteRepository.deleteById(id);
     }
 }
