@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CRUD Odontologos</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Administrar <b>Odontologos</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addDentistModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo</span></a>
+                        <a onclick="GoToHomePage()" class="btn btn-info" data-toggle="modal"><i class="material-icons">home</i> <span>Inicio</span></a>
+                    </div>
+                </div>
+            </div>
+            <table id="tableDentist" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Matricula</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="addDentistModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Odontologo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" id="add_name" name="add_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" class="form-control" id="add_lastname" name="add_lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Matricula</label>
+                        <input type="text" class="form-control" id="add_registry" name="add_registry" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="submit" class="btn btn-success" value="Guardar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editDentistModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Odontologo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label >Id:</label>
+                        <input type="text" class="form-control" id="dentist_id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" id="edit_name" name="edit_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" class="form-control" id="edit_lastname" name="edit_lastname"required>
+                    </div>
+                    <div class="form-group">
+                        <label>Matricula</label>
+                        <input type="text" class="form-control" id="edit_registry" name="edit_registry"required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="submit" class="btn btn-info" value="Guardar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal HTML -->
+<div id="deleteDentistModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Eliminar Odontologo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label >Id:</label>
+                        <input type="text" class="form-control" id="delete_dentist_id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" id="delete_name" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" class="form-control" id="delete_lastname" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Matricula</label>
+                        <input type="text" class="form-control" id="delete_registry" readonly>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro de que desea eliminar este registro?</p>
+                    <p class="text-warning"><small>Esta accion no se puede deshacer.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="submit" class="btn btn-danger" value="Eliminar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/odontologo/js/update_odontologo.js"></script>
+<script type="text/javascript" src="/odontologo/js/delete_odontologo.js"></script>
+<script type="text/javascript" src="/odontologo/js/get_odontologo.js"></script>
+<script type="text/javascript" src="/odontologo/js/post_odontologo.js"></script>
+</body>
+</html>
