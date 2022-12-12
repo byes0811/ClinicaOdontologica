@@ -1,5 +1,6 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
+import com.proyectofinal.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.services.PacienteService;
@@ -27,21 +28,21 @@ public class PacienteController {
         return pacienteService.buscarPorId(id);
     }
 
-    @PutMapping()
+    @PutMapping("/actualizar")
     @ResponseBody
     public Paciente actualizarPaciente(@RequestBody Paciente paciente) {
 
-        Paciente respose = null;
+        Paciente response = null;
 
         if(paciente.getId() != null && pacienteService.buscarPorId(paciente.getId()) != null){
-            respose = pacienteService.actualizarPaciente(paciente);
+            response = pacienteService.actualizarPaciente(paciente);
         }
 
-        return respose;
+        return response;
     }
 
-    @DeleteMapping("/delete")
-    public void deletePorRequestParam(@RequestParam Integer id){
+    @DeleteMapping("/eliminar")
+    public void deletePorRequestParam(@RequestParam Integer id) throws ResourceNotFoundException {
         pacienteService.eliminar(id);
     }
 
