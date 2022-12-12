@@ -1,5 +1,6 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
+import com.proyectofinal.clinicaodontologica.exceptions.BadRequestException;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
@@ -10,6 +11,8 @@ import com.proyectofinal.clinicaodontologica.services.PacienteService;
 import com.proyectofinal.clinicaodontologica.services.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -31,22 +34,18 @@ public class TurnoController {
 
     @PostMapping()
     @ResponseBody
-    public Turno registrarTurno(@RequestParam Integer pacienteId, @RequestParam Integer odontologoId, @RequestBody Turno turno) {
+    public ResponseEntity registrarTurno(@RequestParam Integer pacienteId, @RequestParam Integer odontologoId, @RequestBody Turno turno) throws BadRequestException {
 
-        Paciente paciente = pacienteService.buscarPorId(pacienteId);
-        Odontologo odontologo = odontologoService.buscarPorId(odontologoId);
-
-        if (paciente != null && odontologo != null) {
-            turno.setPaciente(paciente);
-            turno.setOdontologo(odontologo);
-            return turnoService.guardarTurno(turno);
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(turnoService.guardarTurno(turno, pacienteId, odontologoId));
+        } catch (BadRequestException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
-        return null;
     }
 
-    @PutMapping()
+    @PutMapping("/actualizar")
     @ResponseBody
-    public Turno actualizarTurno(@RequestBody Turno turno) {
+    public Turno actualizarTurno(@RequestParam Integer pacienteId, @RequestParam Integer odontologoId, @RequestBody Turno turno) throws BadRequestException{
 
         Turno response = null;
 
@@ -56,10 +55,16 @@ public class TurnoController {
         return response;
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/eliminar")
     @ResponseBody
     public void eliminarTurno(@RequestParam Integer id) {
         turnoService.eliminar(id);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Turno obtenerPorPathVariable(@PathVariable("id") Integer id){
+        return turnoService.buscarPorId(id);
     }
 
     @GetMapping()
