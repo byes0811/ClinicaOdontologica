@@ -1,5 +1,6 @@
 package com.proyectofinal.clinicaodontologica.services;
 
+import com.proyectofinal.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.proyectofinal.clinicaodontologica.repository.OdontologoRepository;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class OdontologoService {
 
         Optional<Odontologo> odontologo = odontologoRepository.findById(id);
 
-        if(odontologo.isPresent()){
+        if (odontologo.isPresent()) {
             return odontologo.get();
-        }else{
+        } else {
             return null;
         }
     }
@@ -33,14 +34,14 @@ public class OdontologoService {
         odontologoRepository.deleteById(id);
     }
 
-    public Odontologo actualizarOdontologo(Odontologo odontologo) {
+    public Odontologo actualizarOdontologo(Odontologo odontologo) throws ResourceNotFoundException {
 
         Optional<Odontologo> odontologo1 = odontologoRepository.findById(odontologo.getId());
 
-        if(odontologo1.isPresent()){
-            return odontologoRepository.save(odontologo1.get());
-        }else{
-            return null;
+        if (odontologo1.isPresent()) {
+            return odontologoRepository.save(odontologo);
+        } else {
+            throw new ResourceNotFoundException("No existe odontologo con id: " + odontologo.getId());
         }
     }
 
