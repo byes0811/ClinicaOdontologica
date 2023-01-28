@@ -31,4 +31,14 @@ public class Turno {
 
     @Column
     private Date fechaCita;
+
+    @Override
+    public String toString() {
+        return "Turno{" +
+                "id=" + id +
+                ", paciente=" + paciente +
+                ", odontologo=" + odontologo +
+                ", fechaCita=" + fechaCita +
+                '}';
+    }
 }

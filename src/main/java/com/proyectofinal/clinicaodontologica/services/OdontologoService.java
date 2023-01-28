@@ -3,6 +3,7 @@ package com.proyectofinal.clinicaodontologica.services;
 import com.proyectofinal.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.proyectofinal.clinicaodontologica.repository.OdontologoRepository;
 import com.proyectofinal.clinicaodontologica.models.Odontologo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class OdontologoService {
 
     @Autowired
@@ -46,6 +48,8 @@ public class OdontologoService {
     }
 
     public Odontologo guardar(Odontologo odontologo) {
-        return odontologoRepository.save(odontologo);
+        Odontologo odontologo1 = odontologoRepository.save(odontologo);
+        log.info("Odontologo " + odontologo1.toString() + " guardado con exito.");
+        return odontologo1;
     }
 }

@@ -1,7 +1,6 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
 import com.proyectofinal.clinicaodontologica.exceptions.ResourceNotFoundException;
-import com.proyectofinal.clinicaodontologica.models.Odontologo;
 import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.services.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;

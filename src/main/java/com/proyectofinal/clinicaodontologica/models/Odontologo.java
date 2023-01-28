@@ -22,4 +22,9 @@ public class Odontologo {
     private String apellido;
     @Column
     private Integer matricula;
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido;
+    }
 }

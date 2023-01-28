@@ -1,23 +1,16 @@
 package com.proyectofinal.clinicaodontologica.controllers;
 
 import com.proyectofinal.clinicaodontologica.exceptions.BadRequestException;
-import com.proyectofinal.clinicaodontologica.models.Odontologo;
-import com.proyectofinal.clinicaodontologica.models.Paciente;
 import com.proyectofinal.clinicaodontologica.models.Turno;
-import com.proyectofinal.clinicaodontologica.repository.OdontologoRepository;
-import com.proyectofinal.clinicaodontologica.repository.PacienteRepository;
 import com.proyectofinal.clinicaodontologica.services.OdontologoService;
 import com.proyectofinal.clinicaodontologica.services.PacienteService;
 import com.proyectofinal.clinicaodontologica.services.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/turnos")
