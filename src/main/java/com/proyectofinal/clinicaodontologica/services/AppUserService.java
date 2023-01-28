@@ -1,6 +1,5 @@
 package com.proyectofinal.clinicaodontologica.services;
 
-import com.proyectofinal.clinicaodontologica.models.AppUser;
 import com.proyectofinal.clinicaodontologica.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
